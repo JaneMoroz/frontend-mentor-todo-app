@@ -6,6 +6,9 @@ import { normalize } from "styled-normalize";
 import imageDark from "../assets/images/bg-desktop-dark.jpg";
 import imageLight from "../assets/images/bg-desktop-light.jpg";
 
+// Styled Components
+import { Background, Container } from "../styles/globalStyles";
+
 type ThemeType = {
   background: string;
   listBackground: string;
@@ -37,10 +40,15 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     background: ${(props) => props.theme.background};
   }
 
-  .bc-image {
-    height: 30rem;
-    background-image: url(${(props) => props.theme.image});
-    background-size: cover;
+  ul {
+    text-decoration: none;
+  }
+
+  button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
   }
 `;
 
@@ -76,8 +84,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     background: "#e4e5f1",
     listBackground: "#fafafa",
     title: "#e4e5f1",
-    primary: "#9394a5",
-    secondary: "#484b6a",
+    primary: "#484b6a",
+    secondary: "#9394a5",
     blue: "#3a7bfd",
     image: imageLight,
   };
@@ -88,7 +96,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <ThemeProvider theme={currentTheme === "dark" ? darkTheme : lightTheme}>
       <GlobalStyle />
       <main>
-        <div className="bc-image">{children}</div>
+        <Background>
+          <Container>{children}</Container>
+        </Background>
       </main>
     </ThemeProvider>
   );
