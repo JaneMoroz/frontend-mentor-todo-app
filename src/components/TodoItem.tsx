@@ -18,11 +18,11 @@ interface TodoItemProp {
 }
 
 const TodoItem: React.FC<TodoItemProp> = ({ todo }) => {
-  const { deleteTodo, toggleTodoStatus } = useGlobalContext();
+  const { dispatch } = useGlobalContext();
   return (
     <ListItem checked={todo.status === "completed"}>
       <button
-        onClick={() => toggleTodoStatus(todo.id)}
+        onClick={() => dispatch({ type: "TOGGLE_TODO_STATUS", id: todo.id })}
         type="button"
         className="round-button"
         aria-label="check"
@@ -31,7 +31,7 @@ const TodoItem: React.FC<TodoItemProp> = ({ todo }) => {
       </button>
       <p>{todo.text}</p>
       <button
-        onClick={() => deleteTodo(todo.id)}
+        onClick={() => dispatch({ type: "DELETE_TODO", id: todo.id })}
         type="button"
         className="delete-button"
         aria-label="delete"

@@ -80,7 +80,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <ThemeProvider theme={currentTheme === "dark" ? darkTheme : lightTheme}>
       <GlobalStyle />
       <main>
-        <Background></Background>
+        <Background />
         <Container>{children}</Container>
       </main>
     </ThemeProvider>

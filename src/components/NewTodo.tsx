@@ -8,7 +8,7 @@ import { NewTodoForm, NewTodoInput } from "../styles/newTodoStyles";
 import { useGlobalContext } from "../context/context";
 
 const NewTodo = () => {
-  const { addTodo } = useGlobalContext();
+  const { dispatch } = useGlobalContext();
   const [newTodo, setNewTodo] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -18,7 +18,7 @@ const NewTodo = () => {
       text: newTodo,
       status: "active",
     };
-    addTodo(todo);
+    dispatch({ type: "ADD_TODO", todo });
     setNewTodo("");
   };
   return (

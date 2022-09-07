@@ -11,13 +11,8 @@ import { Flex } from "../styles/globalStyles";
 import { useGlobalContext } from "../context/context";
 
 const TodoList = () => {
-  const {
-    displayed_todos,
-    all_filters,
-    active_filter,
-    filterTodos,
-    clearCompletedTodos,
-  } = useGlobalContext();
+  const { displayed_todos, all_filters, active_filter, dispatch } =
+    useGlobalContext();
 
   return (
     <TodoListSection>
@@ -36,7 +31,9 @@ const TodoList = () => {
             {all_filters.map((filter, index) => {
               return (
                 <button
-                  onClick={() => filterTodos(filter)}
+                  onClick={() =>
+                    dispatch({ type: "FILTER_TODOS", status: filter })
+                  }
                   className={filter === active_filter ? "active" : ""}
                   key={index}
                   type="button"
@@ -46,7 +43,10 @@ const TodoList = () => {
               );
             })}
           </nav>
-          <button onClick={clearCompletedTodos} type="button">
+          <button
+            onClick={() => dispatch({ type: "CLEAR_COMPLETED_TODOS" })}
+            type="button"
+          >
             Clear completed
           </button>
         </Flex>

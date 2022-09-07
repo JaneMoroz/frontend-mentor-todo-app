@@ -12,7 +12,16 @@ import { Flex } from "../styles/globalStyles";
 import { useGlobalContext } from "../context/context";
 
 const Header = () => {
-  const { currentTheme, toggleTheme } = useGlobalContext();
+  const { currentTheme, dispatch } = useGlobalContext();
+
+  const toggleTheme = () => {
+    if (currentTheme === "dark") {
+      dispatch({ type: "TOGGLE_THEME", theme: "light" });
+    } else {
+      dispatch({ type: "TOGGLE_THEME", theme: "dark" });
+    }
+  };
+
   return (
     <Heading>
       <Flex>

@@ -35,12 +35,7 @@ type Action =
     };
 
 type GlobalContextType = StateType & {
-  toggleTheme: () => void;
-  addTodo: (todo: ITodo) => void;
-  deleteTodo: (id: string) => void;
-  toggleTodoStatus: (id: string) => void;
-  filterTodos: (status: string) => void;
-  clearCompletedTodos: () => void;
+  dispatch: React.Dispatch<Action>;
 };
 
 // Initial state
@@ -129,44 +124,11 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
     dispatch({ type: "FILTER_TODOS", status: state.active_filter });
   }, [state.todos]);
 
-  const toggleTheme = () => {
-    if (state.currentTheme === "dark") {
-      dispatch({ type: "TOGGLE_THEME", theme: "light" });
-    } else {
-      dispatch({ type: "TOGGLE_THEME", theme: "dark" });
-    }
-  };
-
-  const addTodo = (todo: ITodo) => {
-    dispatch({ type: "ADD_TODO", todo });
-  };
-
-  const deleteTodo = (id: string) => {
-    dispatch({ type: "DELETE_TODO", id });
-  };
-
-  const toggleTodoStatus = (id: string) => {
-    dispatch({ type: "TOGGLE_TODO_STATUS", id });
-  };
-
-  const filterTodos = (status: string) => {
-    dispatch({ type: "FILTER_TODOS", status });
-  };
-
-  const clearCompletedTodos = () => {
-    dispatch({ type: "CLEAR_COMPLETED_TODOS" });
-  };
-
   return (
     <GlobalContext.Provider
       value={{
         ...state,
-        toggleTheme,
-        addTodo,
-        deleteTodo,
-        toggleTodoStatus,
-        filterTodos,
-        clearCompletedTodos,
+        dispatch,
       }}
     >
       {children}
