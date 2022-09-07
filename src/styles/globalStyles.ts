@@ -16,6 +16,12 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
+
+  @media only screen and (max-width: 37.5em) {
+    max-width: 50rem;
+    width: 100%;
+    padding: 0 1.8rem;
+  }
 `;
 
 export const Flex = styled.div`

@@ -20,7 +20,6 @@ type ThemeType = {
 };
 
 const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
-  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
   ${normalize}
   * {
     margin: 0;
@@ -29,10 +28,18 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
   }
   html {
     font-size: 62.5%; // 1rem = 10px
+
+    @media only screen and (max-width: 56.25em) {
+      font-size: 56.25%; //1 rem = 9px
+    }
+
+    @media only screen and (max-width: 37.5em) {
+      font-size: 50%; //1 rem = 8px,
+    }
   }
   body {
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 400;
   }
   main {
