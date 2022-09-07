@@ -9,7 +9,7 @@ import crossIcon from "../assets/icons/icon-cross.svg";
 
 const TodoItem = () => {
   return (
-    <ListItem>
+    <ListItem checked>
       <button type="button" className="round-button" aria-label="check">
         <img src={checkedIcon} alt="check icon" />
       </button>

@@ -15,6 +15,7 @@ type ThemeType = {
   title: string;
   primary: string;
   secondary: string;
+  tertiary: string;
   blue: string;
   image: string;
 };
@@ -75,9 +76,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const darkTheme: ThemeType = {
     background: "#161722",
     listBackground: "#25273c",
-    title: "#e4e5f1",
+    title: "#fafafa",
     primary: "#cacde8",
     secondary: "#4d5066",
+    tertiary: "#4d5066",
     blue: "#3a7bfd",
     image: imageDark,
   };
@@ -90,9 +92,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const lightTheme: ThemeType = {
     background: "#e4e5f1",
     listBackground: "#fafafa",
-    title: "#e4e5f1",
+    title: "#fafafa",
     primary: "#484b6a",
     secondary: "#9394a5",
+    tertiary: "#d2d3db",
     blue: "#3a7bfd",
     image: imageLight,
   };

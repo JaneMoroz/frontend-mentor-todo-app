@@ -62,7 +62,7 @@ export const ListItem = styled.li<ListItemProps>`
         }
       }
       p {
-        color: ${(props) => props.theme.secondary};
+        color: ${(props) => props.theme.tertiary};
         text-decoration: line-through;
       }
     `}
