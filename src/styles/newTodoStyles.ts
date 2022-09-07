@@ -20,6 +20,7 @@ export const NewTodoForm = styled.form`
 `;
 
 export const NewTodoInput = styled.input`
+  width: 100%;
   margin: 0;
   background: ${(props) => props.theme.listBackground};
   border: none;
