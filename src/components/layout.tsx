@@ -1,17 +1,16 @@
 // Styled components
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { normalize } from "styled-normalize";
-
-// Images
-import imageDark from "../assets/images/bg-desktop-dark.jpg";
-import imageLight from "../assets/images/bg-desktop-light.jpg";
-
-// Styled Components
 import { Background, Container } from "../styles/globalStyles";
+
+// Themes
+import { darkTheme } from "../styles/themes/dark";
+import { lightTheme } from "../styles/themes/light";
 
 // Context
 import { useGlobalContext } from "../context/context";
 
+// Types
 type ThemeType = {
   background: string;
   listBackground: string;
@@ -23,6 +22,11 @@ type ThemeType = {
   image: string;
 };
 
+type LayoutProps = {
+  children: React.ReactNode;
+};
+
+// Global style
 const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
   ${normalize}
   * {
@@ -47,7 +51,8 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     font-weight: 400;
   }
   main {
-    height: 100vh;
+    position: relative;
+    min-height: 100vh;
     background: ${(props) => props.theme.background};
   }
 
@@ -61,57 +66,22 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     outline: none;
     cursor: pointer;
   }
+
+  input {
+    border: none;
+    outline: none;
+  }
 `;
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  // - Very Dark Blue: #161722
-  // - Very Dark Desaturated Blue: #25273c
-  // - Light Grayish Blue: #cacde8
-  // - Light Grayish Blue (hover): #e4e5f1
-  // - Dark Grayish Blue: #777a92 ???
-  // - Very Dark Grayish Blue: #4d5066
-  // - Very Dark Grayish Blue: #393a4c ???
-
-  const darkTheme: ThemeType = {
-    background: "#161722",
-    listBackground: "#25273c",
-    title: "#fafafa",
-    primary: "#cacde8",
-    secondary: "#4d5066",
-    tertiary: "#4d5066",
-    blue: "#3a7bfd",
-    image: imageDark,
-  };
-
-  // - Very Light Gray: #fafafa
-  // - Very Light Grayish Blue: #e4e5f1
-  // - Light Grayish Blue: #d2d3db ???
-  // - Dark Grayish Blue: #9394a5
-  // - Very Dark Grayish Blue: #484b6a
-  const lightTheme: ThemeType = {
-    background: "#e4e5f1",
-    listBackground: "#fafafa",
-    title: "#fafafa",
-    primary: "#484b6a",
-    secondary: "#9394a5",
-    tertiary: "#d2d3db",
-    blue: "#3a7bfd",
-    image: imageLight,
-  };
-
   const { currentTheme } = useGlobalContext();
 
   return (
     <ThemeProvider theme={currentTheme === "dark" ? darkTheme : lightTheme}>
       <GlobalStyle />
       <main>
-        <Background>
-          <Container>{children}</Container>
-        </Background>
+        <Background></Background>
+        <Container>{children}</Container>
       </main>
     </ThemeProvider>
   );

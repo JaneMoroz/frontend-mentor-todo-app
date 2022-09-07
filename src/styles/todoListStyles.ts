@@ -4,6 +4,8 @@ export const TodoListSection = styled.div`
   background: ${(props) => props.theme.listBackground};
   border-radius: 5px;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.125);
+  z-index: 999;
+  margin-bottom: 10rem;
 `;
 
 export const ListFooter = styled.footer`
