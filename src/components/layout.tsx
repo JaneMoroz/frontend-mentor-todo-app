@@ -9,6 +9,9 @@ import imageLight from "../assets/images/bg-desktop-light.jpg";
 // Styled Components
 import { Background, Container } from "../styles/globalStyles";
 
+// Context
+import { useGlobalContext } from "../context/context";
+
 type ThemeType = {
   background: string;
   listBackground: string;
@@ -44,7 +47,7 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     font-weight: 400;
   }
   main {
-    min-height: 100vh;
+    height: 100vh;
     background: ${(props) => props.theme.background};
   }
 
@@ -100,7 +103,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     image: imageLight,
   };
 
-  let currentTheme = "dark";
+  const { currentTheme } = useGlobalContext();
 
   return (
     <ThemeProvider theme={currentTheme === "dark" ? darkTheme : lightTheme}>

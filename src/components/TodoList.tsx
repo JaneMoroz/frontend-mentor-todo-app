@@ -7,23 +7,48 @@ import { TodoItem } from "./index";
 import { TodoListSection, ListFooter } from "../styles/todoListStyles";
 import { Flex } from "../styles/globalStyles";
 
+// Context
+import { useGlobalContext } from "../context/context";
+
 const TodoList = () => {
+  const {
+    displayed_todos,
+    all_filters,
+    active_filter,
+    filterTodos,
+    clearCompletedTodos,
+  } = useGlobalContext();
+
   return (
     <TodoListSection>
       <ul>
-        {/* Todos */}
-        <TodoItem />
-        <TodoItem />
+        {displayed_todos.map((todo) => {
+          return <TodoItem key={todo.id} todo={todo} />;
+        })}
       </ul>
       <ListFooter>
         <Flex>
-          <span className="items-left">2 items left</span>
+          <span className="items-left">
+            {displayed_todos.length} item
+            {displayed_todos.length === 1 ? "" : "s"} left
+          </span>
           <nav>
-            <button type="button">All</button>
-            <button type="button">Active</button>
-            <button type="button">Completed</button>
+            {all_filters.map((filter, index) => {
+              return (
+                <button
+                  onClick={() => filterTodos(filter)}
+                  className={filter === active_filter ? "active" : ""}
+                  key={index}
+                  type="button"
+                >
+                  {filter}
+                </button>
+              );
+            })}
           </nav>
-          <button type="button">Clear completed</button>
+          <button onClick={clearCompletedTodos} type="button">
+            Clear completed
+          </button>
         </Flex>
       </ListFooter>
     </TodoListSection>
