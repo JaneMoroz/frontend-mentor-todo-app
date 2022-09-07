@@ -2,7 +2,7 @@ import React, { useContext, useReducer, createContext, useEffect } from "react";
 import ITodo from "../interfaces/ITodo";
 
 // Temp Data
-import { todos, todos as todosData } from "../assets/data/data";
+import { todos as todosData } from "../assets/data/data";
 
 // Types
 type StateType = {
@@ -65,7 +65,6 @@ const reducer = (state: StateType, action: Action) => {
       return {
         ...state,
         todos: [action.todo, ...state.todos],
-        displayed_todos: [action.todo, ...state.todos],
       };
     }
     case "DELETE_TODO": {
@@ -73,7 +72,6 @@ const reducer = (state: StateType, action: Action) => {
       return {
         ...state,
         todos: [...tempTodos],
-        displayed_todos: [...tempTodos],
       };
     }
     case "TOGGLE_TODO_STATUS": {
@@ -89,7 +87,6 @@ const reducer = (state: StateType, action: Action) => {
       return {
         ...state,
         todos: [...tempTodos],
-        displayed_todos: [...tempTodos],
       };
     }
     case "FILTER_TODOS": {
@@ -97,7 +94,7 @@ const reducer = (state: StateType, action: Action) => {
         return {
           ...state,
           active_filter: action.status,
-          displayed_todos: [...initialState.todos],
+          displayed_todos: [...state.todos],
         };
       }
       const tempTodos = state.todos.filter(
@@ -127,6 +124,10 @@ const GlobalContext = createContext({} as GlobalContextType);
 
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    dispatch({ type: "FILTER_TODOS", status: state.active_filter });
+  }, [state.todos]);
 
   const toggleTheme = () => {
     if (state.currentTheme === "dark") {

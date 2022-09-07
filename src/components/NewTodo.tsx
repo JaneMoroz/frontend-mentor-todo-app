@@ -29,6 +29,7 @@ const NewTodo = () => {
         type="text"
         id="todo-text"
         value={newTodo}
+        required
       />
     </NewTodoForm>
   );
