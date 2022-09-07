@@ -8,6 +8,7 @@ export const ListItem = styled.li<ListItemProps>`
   display: flex;
   align-items: center;
   column-gap: 2.4rem;
+  width: 100%;
   padding: 1.8rem 2.4rem;
   background: ${(props) => props.theme.listBackground};
   border-radius: 5px 5px 0 0;
@@ -49,6 +50,8 @@ export const ListItem = styled.li<ListItemProps>`
 
   p {
     color: ${(props) => props.theme.primary};
+    overflow: hidden;
+    flex: 1;
   }
 
   ${(props) =>
