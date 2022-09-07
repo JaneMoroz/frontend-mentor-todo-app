@@ -56,9 +56,14 @@ export const ListItem = styled.li<ListItemProps>`
     css`
       .round-button {
         background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
-
         img {
           display: block;
+        }
+      }
+      .round-button:hover {
+        ::after {
+          height: 0;
+          width: 0;
         }
       }
       p {
