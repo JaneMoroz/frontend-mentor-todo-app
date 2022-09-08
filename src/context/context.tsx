@@ -1,4 +1,9 @@
-import React, { useContext, useReducer, createContext, useEffect } from "react";
+import React, {
+  useContext,
+  useReducer,
+  createContext,
+  useLayoutEffect,
+} from "react";
 import ITodo from "../interfaces/ITodo";
 
 // Temp Data
@@ -32,6 +37,10 @@ type Action =
     }
   | {
       type: "CLEAR_COMPLETED_TODOS";
+    }
+  | {
+      type: "UPDATE_ORDER";
+      todos: ITodo[];
     };
 
 type GlobalContextType = StateType & {
@@ -111,6 +120,12 @@ const reducer = (state: StateType, action: Action) => {
         displayed_todos: [...tempTodos],
       };
     }
+    case "UPDATE_ORDER": {
+      return {
+        ...state,
+        todos: [...action.todos],
+      };
+    }
   }
 };
 
@@ -120,7 +135,7 @@ const GlobalContext = createContext({} as GlobalContextType);
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch({ type: "FILTER_TODOS", status: state.active_filter });
   }, [state.todos]);
 

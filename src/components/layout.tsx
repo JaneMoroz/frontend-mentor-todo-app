@@ -18,6 +18,7 @@ type ThemeType = {
   primary: string;
   secondary: string;
   tertiary: string;
+  draggable: string;
   blue: string;
   image: string;
 };

@@ -10,17 +10,54 @@ import { Flex } from "../styles/globalStyles";
 // Context
 import { useGlobalContext } from "../context/context";
 
+// DragDrop
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+
 const TodoList = () => {
-  const { displayed_todos, all_filters, active_filter, dispatch } =
+  const { todos, displayed_todos, all_filters, active_filter, dispatch } =
     useGlobalContext();
+
+  const onDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+    // if dropped outside or esc button was clicked
+    if (!result.destination) {
+      return;
+    }
+    // check if location changed
+    // 1. not changed
+    if (
+      destination!.droppableId === source.droppableId &&
+      destination!.index === source.index
+    ) {
+      return;
+    }
+    // 2. changed
+    const draggableTodo = todos.find((todo) => todo.id === draggableId);
+    const draggableTodoIndex = todos.findIndex(
+      (todo) => todo.id === draggableId
+    );
+    const updatedTodos = [...todos]
+      .slice(0, draggableTodoIndex)
+      .concat([...todos].slice(draggableTodoIndex + 1));
+    updatedTodos.splice(destination!.index, 0, draggableTodo!);
+
+    dispatch({ type: "UPDATE_ORDER", todos: updatedTodos });
+  };
 
   return (
     <TodoListSection>
-      <ul>
-        {displayed_todos.map((todo) => {
-          return <TodoItem key={todo.id} todo={todo} />;
-        })}
-      </ul>
+      <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
+        <Droppable droppableId="droppable">
+          {(provided) => (
+            <ul {...provided.droppableProps} ref={provided.innerRef}>
+              {displayed_todos.map((todo, index) => {
+                return <TodoItem key={todo.id} todo={todo} index={index} />;
+              })}
+              {provided.placeholder}
+            </ul>
+          )}
+        </Droppable>
+      </DragDropContext>
       <ListFooter>
         <Flex>
           <span className="items-left">

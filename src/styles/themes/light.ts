@@ -8,6 +8,7 @@ export const lightTheme = {
   primary: "#484b6a",
   secondary: "#9394a5",
   tertiary: "#d2d3db",
+  draggable: "#f9eefe",
   blue: "#3a7bfd",
   image: imageLight,
 };

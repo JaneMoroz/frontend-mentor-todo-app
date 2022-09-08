@@ -8,6 +8,7 @@ export const darkTheme = {
   primary: "#cacde8",
   secondary: "#4d5066",
   tertiary: "#4d5066",
+  draggable: "#212336",
   blue: "#3a7bfd",
   image: imageDark,
 };
