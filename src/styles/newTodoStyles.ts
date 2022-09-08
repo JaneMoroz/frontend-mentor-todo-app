@@ -49,4 +49,8 @@ export const Button = styled.button`
   :hover {
     color: ${(props) => props.theme.primary};
   }
+
+  :disabled:hover {
+    color: ${(props) => props.theme.secondary};
+  }
 `;
