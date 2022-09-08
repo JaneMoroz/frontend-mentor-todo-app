@@ -8,7 +8,7 @@ import checkedIcon from "../assets/icons/icon-check.svg";
 import crossIcon from "../assets/icons/icon-cross.svg";
 
 // Interfaces
-import ITODO from "../interfaces/ITodo";
+import ITodo from "../interfaces/ITodo";
 
 // Context
 import { useGlobalContext } from "../context/context";
@@ -17,7 +17,7 @@ import { useGlobalContext } from "../context/context";
 import { Draggable } from "react-beautiful-dnd";
 
 interface TodoItemProp {
-  todo: ITODO;
+  todo: ITodo;
   index: number;
 }
 

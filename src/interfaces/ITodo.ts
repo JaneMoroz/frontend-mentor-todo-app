@@ -1,7 +1,7 @@
-interface ITODO {
+interface ITodo {
   id: string;
   text: string;
   status: string;
 }
 
-export default ITODO;
+export default ITodo;

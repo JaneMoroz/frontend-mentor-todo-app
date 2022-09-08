@@ -19,6 +19,14 @@ type StateType = {
   displayed_todos: ITodo[];
   all_filters: string[];
   active_filter: string;
+  hasPast: boolean;
+  hasFuture: boolean;
+};
+
+type DefaultStateType = {
+  past: StateType;
+  present: StateType;
+  future: StateType;
 };
 
 type Action =
@@ -39,7 +47,7 @@ type Action =
       status: string;
     }
   | {
-      type: "CLEAR_COMPLETED_TODOS";
+      type: "CLEAR_COMPLETED_TODOS" | "UNDO" | "REDO";
     }
   | {
       type: "UPDATE_ORDER";
@@ -54,36 +62,67 @@ type GlobalContextType = StateType & {
 const initialState = {
   currentTheme: getFromStorage("currentTheme", "dark"),
   todos: getFromStorage("todos", todosData),
-  displayed_todos: [],
+  displayed_todos: getFromStorage("todos", todosData),
   all_filters: ["all", "active", "completed"],
   active_filter: "all",
+  hasPast: false,
+  hasFuture: false,
+};
+
+// Default State
+const defaultState = {
+  past: initialState,
+  present: initialState,
+  future: initialState,
 };
 
 // Reducer
-const reducer = (state: StateType, action: Action) => {
+const reducer = (state: DefaultStateType, action: Action) => {
   switch (action.type) {
     case "TOGGLE_THEME": {
       saveToStorage("currentTheme", action.theme);
       return {
-        ...state,
-        currentTheme: action.theme,
+        past: { ...state.present },
+        present: {
+          ...state.present,
+          currentTheme: action.theme,
+          hasPast: true,
+          hasFuture: false,
+        },
+        future: { ...state.future },
       };
     }
     case "ADD_TODO": {
       return {
-        ...state,
-        todos: [action.todo, ...state.todos],
+        past: { ...state.present },
+        present: {
+          ...state.present,
+          todos: [action.todo, ...state.present.todos],
+          hasPast: true,
+          hasFuture: false,
+        },
+        future: {
+          ...state.future,
+        },
       };
     }
     case "DELETE_TODO": {
-      const tempTodos = state.todos.filter((todo) => todo.id !== action.id);
+      const tempTodos = state.present.todos.filter(
+        (todo) => todo.id !== action.id
+      );
       return {
-        ...state,
-        todos: [...tempTodos],
+        past: { ...state.present },
+        present: {
+          ...state.present,
+          todos: [...tempTodos],
+          hasPast: true,
+          hasFuture: false,
+        },
+        future: { ...state.future },
       };
     }
     case "TOGGLE_TODO_STATUS": {
-      const tempTodos = state.todos.map((todo) => {
+      const tempTodos = state.present.todos.map((todo) => {
         if (todo.id === action.id) {
           return {
             ...todo,
@@ -93,41 +132,97 @@ const reducer = (state: StateType, action: Action) => {
         return todo;
       });
       return {
-        ...state,
-        todos: [...tempTodos],
+        past: { ...state.present },
+        present: {
+          ...state.present,
+          todos: [...tempTodos],
+          hasPast: true,
+          hasFuture: false,
+        },
+        future: { ...state.future },
       };
     }
     case "FILTER_TODOS": {
       if (action.status === "all") {
         return {
-          ...state,
-          active_filter: action.status,
-          displayed_todos: [...state.todos],
+          past: { ...state.past },
+          present: {
+            ...state.present,
+            active_filter: action.status,
+            displayed_todos: [...state.present.todos],
+          },
+          future: { ...state.future },
         };
       }
-      const tempTodos = state.todos.filter(
+      const tempTodos = state.present.todos.filter(
         (todo) => todo.status === action.status
       );
       return {
-        ...state,
-        active_filter: action.status,
-        displayed_todos: [...tempTodos],
+        past: { ...state.past },
+        present: {
+          ...state.present,
+          active_filter: action.status,
+          displayed_todos: [...tempTodos],
+        },
+        future: { ...state.future },
       };
     }
     case "CLEAR_COMPLETED_TODOS": {
-      const tempTodos = state.todos.filter(
+      const tempTodos = state.present.todos.filter(
         (todo) => todo.status !== "completed"
       );
       return {
-        ...state,
-        todos: [...tempTodos],
-        displayed_todos: [...tempTodos],
+        past: { ...state.present },
+        present: {
+          ...state.present,
+          todos: [...tempTodos],
+          displayed_todos: [...tempTodos],
+          hasFuture: false,
+          hasPast: true,
+        },
+        future: { ...state.future },
       };
     }
     case "UPDATE_ORDER": {
       return {
-        ...state,
-        todos: [...action.todos],
+        past: { ...state.present },
+        present: {
+          ...state.present,
+          todos: [...action.todos],
+          hasFuture: false,
+          hasPast: true,
+        },
+        future: { ...state.future },
+      };
+    }
+    case "UNDO": {
+      console.log("undo");
+      const newPresent = { ...state.past };
+      const newFuture = { ...state.present };
+      saveToStorage("todos", newPresent.todos);
+      return {
+        past: { ...newPresent },
+        present: {
+          ...newPresent,
+          hasPast: false,
+          hasFuture: true,
+        },
+        future: { ...newFuture },
+      };
+    }
+    case "REDO": {
+      console.log("redo");
+      const newPast = { ...state.present };
+      const newPresent = { ...state.future };
+      saveToStorage("todos", newPresent.todos);
+      return {
+        past: { ...newPast },
+        present: {
+          ...newPresent,
+          hasPast: true,
+          hasFuture: false,
+        },
+        future: { ...newPresent },
       };
     }
   }
@@ -137,17 +232,17 @@ const reducer = (state: StateType, action: Action) => {
 const GlobalContext = createContext({} as GlobalContextType);
 
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, defaultState);
 
   useLayoutEffect(() => {
-    dispatch({ type: "FILTER_TODOS", status: state.active_filter });
-    saveToStorage("todos", state.todos);
-  }, [state.todos]);
+    dispatch({ type: "FILTER_TODOS", status: state.present.active_filter });
+    saveToStorage("todos", state.present.todos);
+  }, [state.present.todos]);
 
   return (
     <GlobalContext.Provider
       value={{
-        ...state,
+        ...state.present,
         dispatch,
       }}
     >

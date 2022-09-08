@@ -16,7 +16,7 @@ export const Container = styled.div`
   row-gap: 2rem;
   width: 50rem;
   min-height: 100vh;
-  padding: 8rem 1.8rem;
+  padding: 5rem 1.8rem;
   margin: 0 auto;
 
   @media only screen and (max-width: 37.5em) {
