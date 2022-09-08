@@ -6,6 +6,9 @@ import React, {
 } from "react";
 import ITodo from "../interfaces/ITodo";
 
+// Local Storage
+import { getFromStorage, saveToStorage } from "../utils/localStorage";
+
 // Temp Data
 import { todos as todosData } from "../assets/data/data";
 
@@ -49,9 +52,9 @@ type GlobalContextType = StateType & {
 
 // Initial state
 const initialState = {
-  currentTheme: "dark",
-  todos: todosData,
-  displayed_todos: todosData,
+  currentTheme: getFromStorage("currentTheme", "dark"),
+  todos: getFromStorage("todos", todosData),
+  displayed_todos: [],
   all_filters: ["all", "active", "completed"],
   active_filter: "all",
 };
@@ -60,6 +63,7 @@ const initialState = {
 const reducer = (state: StateType, action: Action) => {
   switch (action.type) {
     case "TOGGLE_THEME": {
+      saveToStorage("currentTheme", action.theme);
       return {
         ...state,
         currentTheme: action.theme,
@@ -137,6 +141,7 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
 
   useLayoutEffect(() => {
     dispatch({ type: "FILTER_TODOS", status: state.active_filter });
+    saveToStorage("todos", state.todos);
   }, [state.todos]);
 
   return (
