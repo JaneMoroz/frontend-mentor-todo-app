@@ -12,7 +12,7 @@ export const NewTodoForm = styled.form`
 
   span {
     height: 2.4rem;
-    width: 2.6rem;
+    width: 2.4rem;
     border-radius: 50%;
     border: 0.5px solid ${(props) => props.theme.secondary};
     background: ${(props) => props.theme.listBackground};
@@ -24,4 +24,5 @@ export const NewTodoInput = styled.input`
   margin: 0;
   background: ${(props) => props.theme.listBackground};
   color: ${(props) => props.theme.primary};
+  flex: 1;
 `;
