@@ -33,13 +33,31 @@ const TodoList = () => {
     }
     // 2. changed
     const draggableTodo = todos.find((todo) => todo.id === draggableId);
-    const draggableTodoIndex = todos.findIndex(
-      (todo) => todo.id === draggableId
-    );
-    const updatedTodos = [...todos]
-      .slice(0, draggableTodoIndex)
-      .concat([...todos].slice(draggableTodoIndex + 1));
-    updatedTodos.splice(destination!.index, 0, draggableTodo!);
+    let updatedTodos;
+    let draggableTodoIndex;
+
+    if (active_filter === "all") {
+      draggableTodoIndex = todos.findIndex((todo) => todo.id === draggableId);
+      updatedTodos = [...todos]
+        .slice(0, draggableTodoIndex)
+        .concat([...todos].slice(draggableTodoIndex + 1));
+      updatedTodos.splice(destination!.index, 0, draggableTodo!);
+    } else {
+      const filteredTodos = [...todos].filter(
+        (todo) => todo.status === active_filter
+      );
+      const restTodos = [...todos].filter(
+        (todo) => todo.status !== active_filter
+      );
+      updatedTodos = [...filteredTodos, ...restTodos];
+      draggableTodoIndex = updatedTodos.findIndex(
+        (todo) => todo.id === draggableId
+      );
+      updatedTodos = updatedTodos
+        .slice(0, draggableTodoIndex)
+        .concat(updatedTodos.slice(draggableTodoIndex + 1));
+      updatedTodos.splice(destination!.index, 0, draggableTodo!);
+    }
 
     dispatch({ type: "UPDATE_ORDER", todos: updatedTodos });
   };
