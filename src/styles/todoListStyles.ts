@@ -5,7 +5,11 @@ export const TodoListSection = styled.div`
   border-radius: 5px;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.125);
   z-index: 999;
-  margin-bottom: 10rem;
+  margin-bottom: 3.2rem;
+
+  @media only screen and (max-width: 37.5em) {
+    margin-bottom: 10rem;
+  }
 `;
 
 export const ListFooter = styled.footer`
