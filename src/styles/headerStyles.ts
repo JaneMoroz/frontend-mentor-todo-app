@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Heading = styled.div`
+export const Heading = styled.header`
   z-index: 999;
   h1 {
     font-size: 4rem;
