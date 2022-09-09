@@ -97,16 +97,12 @@ const TodoList = () => {
       <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
         <Droppable droppableId="droppable">
           {(provided) => (
-            <ul
-              role="list"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
+            <div {...provided.droppableProps} ref={provided.innerRef}>
               {displayed_todos.map((todo, index) => {
                 return <TodoItem key={todo.id} todo={todo} index={index} />;
               })}
               {provided.placeholder}
-            </ul>
+            </div>
           )}
         </Droppable>
       </DragDropContext>

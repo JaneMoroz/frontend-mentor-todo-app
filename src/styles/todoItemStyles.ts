@@ -5,7 +5,7 @@ type ListItemProps = {
   isDragging?: boolean;
 };
 
-export const ListItem = styled.li<ListItemProps>`
+export const ListItem = styled.div<ListItemProps>`
   display: flex;
   align-items: center;
   column-gap: 2.4rem;
