@@ -1,4 +1,4 @@
-import Layout from "./Layout";
+import Layout from "./layout";
 import NewTodo from "./NewTodo";
 import TodoItem from "./TodoItem";
 import TodoList from "./TodoList";
