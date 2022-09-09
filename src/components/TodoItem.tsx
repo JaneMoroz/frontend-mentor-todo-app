@@ -28,6 +28,7 @@ const TodoItem: React.FC<TodoItemProp> = ({ todo, index }) => {
     <Draggable key={todo.id} draggableId={todo.id} index={index}>
       {(provided, snapshot) => (
         <ListItem
+          role="todo item"
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
