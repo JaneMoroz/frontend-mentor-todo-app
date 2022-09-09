@@ -43,12 +43,15 @@ const TodoList = () => {
     let updatedTodos;
     let draggableTodoIndex;
 
+    // if active filter "all", just simply rearrange todos order
     if (active_filter === "all") {
       draggableTodoIndex = todos.findIndex((todo) => todo.id === draggableId);
       updatedTodos = [...todos]
         .slice(0, draggableTodoIndex)
         .concat([...todos].slice(draggableTodoIndex + 1));
       updatedTodos.splice(destination!.index, 0, draggableTodo!);
+      // if active filter "active" or "completed", move todos with the same status to top
+      // and then rearrange the order
     } else {
       const filteredTodos = [...todos].filter(
         (todo) => todo.status === active_filter

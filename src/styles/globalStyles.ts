@@ -95,6 +95,10 @@ export const Button = styled.button<ButtonProps>`
     css`
       min-height: 1.8rem;
       min-width: 1.8rem;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     `}
   ${(props) =>
     props.circle === true &&
@@ -130,6 +134,8 @@ export const Button = styled.button<ButtonProps>`
     css`
       background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
       img {
+        width: 55%;
+        height: 55%;
         display: block;
       }
       :hover {
