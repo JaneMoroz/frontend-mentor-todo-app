@@ -36,4 +36,8 @@ export const NewTodoInput = styled.input`
   background: ${(props) => props.theme.listBackground};
   color: ${(props) => props.theme.primary};
   flex: 1;
+
+  ::placeholder {
+    color: ${(props) => props.theme.secondary};
+  }
 `;

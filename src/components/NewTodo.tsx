@@ -36,6 +36,7 @@ const NewTodo = () => {
           type="text"
           id="todo-text"
           value={newTodo}
+          placeholder="Create a new todo..."
           required
         />
       </NewTodoForm>
