@@ -1,6 +1,7 @@
 import React from "react";
 
 // Styled Components
+import { Button } from "../styles/globalStyles";
 import { ListItem } from "../styles/todoItemStyles";
 
 // Icons
@@ -33,25 +34,26 @@ const TodoItem: React.FC<TodoItemProp> = ({ todo, index }) => {
           isDragging={snapshot.isDragging}
           checked={todo.status === "completed"}
         >
-          <button
+          <Button
+            circle
+            circleChecked={todo.status === "completed"}
             onClick={() =>
               dispatch({ type: "TOGGLE_TODO_STATUS", id: todo.id })
             }
             type="button"
-            className="round-button"
             aria-label="check"
           >
             <img src={checkedIcon} alt="check icon" />
-          </button>
+          </Button>
           <p>{todo.text}</p>
-          <button
+          <Button
+            icon
             onClick={() => dispatch({ type: "DELETE_TODO", id: todo.id })}
             type="button"
-            className="delete-button"
             aria-label="delete"
           >
             <img src={crossIcon} alt="cross icon" />
-          </button>
+          </Button>
         </ListItem>
       )}
     </Draggable>

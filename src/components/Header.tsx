@@ -6,7 +6,7 @@ import moonIcon from "../assets/icons/icon-moon.svg";
 
 // Styled Components
 import { Heading } from "../styles/headerStyles";
-import { Flex } from "../styles/globalStyles";
+import { Flex, Button } from "../styles/globalStyles";
 
 // Context
 import { useGlobalContext } from "../context/context";
@@ -26,13 +26,14 @@ const Header = () => {
     <Heading>
       <Flex>
         <h1>Todo</h1>
-        <button
+        <Button
+          icon
           onClick={() => toggleTheme()}
           type="button"
           aria-label="theme toggler"
         >
           <img src={currentTheme === "dark" ? sunIcon : moonIcon} alt="theme" />
-        </button>
+        </Button>
       </Flex>
     </Heading>
   );

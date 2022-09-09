@@ -13,41 +13,7 @@ export const ListItem = styled.li<ListItemProps>`
   padding: 1.8rem 2.4rem;
   background: ${(props) => props.theme.listBackground};
   border-radius: 5px 5px 0 0;
-  border-bottom: 1px solid ${(props) => props.theme.secondary};
-
-  .round-button {
-    height: 2.4rem;
-    width: 2.4rem;
-    border-radius: 50%;
-    border: 0.5px solid ${(props) => props.theme.secondary};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    img {
-      display: none;
-    }
-  }
-
-  .round-button:hover {
-    background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
-    transition: all 0.3s;
-
-    ::after {
-      content: "";
-      display: inline-block;
-      height: 90%;
-      width: 90%;
-      background: ${(props) => props.theme.listBackground};
-      border-radius: 50%;
-    }
-  }
-
-  .delete-button {
-    margin-left: auto;
-    height: 1.8rem;
-    width: 1.8rem;
-  }
+  border-bottom: 0.5px solid ${(props) => props.theme.secondary};
 
   p {
     color: ${(props) => props.theme.primary};
@@ -58,18 +24,6 @@ export const ListItem = styled.li<ListItemProps>`
   ${(props) =>
     props.checked === true &&
     css`
-      .round-button {
-        background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
-        img {
-          display: block;
-        }
-      }
-      .round-button:hover {
-        ::after {
-          height: 0;
-          width: 0;
-        }
-      }
       p {
         color: ${(props) => props.theme.tertiary};
         text-decoration: line-through;

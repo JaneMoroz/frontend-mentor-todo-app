@@ -4,8 +4,8 @@ import React from "react";
 import { TodoItem } from "./index";
 
 // Styled Components
-import { TodoListSection, ListFooter } from "../styles/todoListStyles";
-import { Flex } from "../styles/globalStyles";
+import { TodoListSection, TodoListFooter } from "../styles/todoListStyles";
+import { Flex, Button } from "../styles/globalStyles";
 
 // Context
 import { useGlobalContext } from "../context/context";
@@ -14,8 +14,15 @@ import { useGlobalContext } from "../context/context";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 const TodoList = () => {
-  const { todos, displayed_todos, all_filters, active_filter, dispatch } =
-    useGlobalContext();
+  const {
+    todos,
+    displayed_todos,
+    all_filters,
+    active_filter,
+    hasPast,
+    hasFuture,
+    dispatch,
+  } = useGlobalContext();
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
@@ -64,6 +71,26 @@ const TodoList = () => {
 
   return (
     <TodoListSection>
+      <Flex borderBottom>
+        <Button
+          text
+          big
+          onClick={() => dispatch({ type: "UNDO" })}
+          disabled={!hasPast}
+          type="button"
+        >
+          undo
+        </Button>
+        <Button
+          text
+          big
+          onClick={() => dispatch({ type: "REDO" })}
+          disabled={!hasFuture}
+          type="button"
+        >
+          redo
+        </Button>
+      </Flex>
       <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
         <Droppable droppableId="droppable">
           {(provided) => (
@@ -76,7 +103,7 @@ const TodoList = () => {
           )}
         </Droppable>
       </DragDropContext>
-      <ListFooter>
+      <TodoListFooter>
         <Flex>
           <span className="items-left">
             {displayed_todos.length} item
@@ -85,27 +112,30 @@ const TodoList = () => {
           <nav>
             {all_filters.map((filter, index) => {
               return (
-                <button
+                <Button
+                  text
+                  medium
+                  active={filter === active_filter}
                   onClick={() =>
                     dispatch({ type: "FILTER_TODOS", status: filter })
                   }
-                  className={filter === active_filter ? "active" : ""}
                   key={index}
                   type="button"
                 >
                   {filter}
-                </button>
+                </Button>
               );
             })}
           </nav>
-          <button
+          <Button
+            text
             onClick={() => dispatch({ type: "CLEAR_COMPLETED_TODOS" })}
             type="button"
           >
             Clear completed
-          </button>
+          </Button>
         </Flex>
-      </ListFooter>
+      </TodoListFooter>
     </TodoListSection>
   );
 };

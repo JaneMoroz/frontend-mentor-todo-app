@@ -5,16 +5,15 @@ import uuid from "react-uuid";
 import {
   NewTodoSection,
   NewTodoForm,
+  NewTodoLabel,
   NewTodoInput,
-  ButtonsContainer,
-  Button,
 } from "../styles/newTodoStyles";
 
 // Context
 import { useGlobalContext } from "../context/context";
 
 const NewTodo = () => {
-  const { hasPast, hasFuture, dispatch } = useGlobalContext();
+  const { dispatch } = useGlobalContext();
   const [newTodo, setNewTodo] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -31,6 +30,7 @@ const NewTodo = () => {
     <NewTodoSection>
       <NewTodoForm onSubmit={(e) => handleSubmit(e)}>
         <span className="circle" />
+        <NewTodoLabel htmlFor="todo-text">new todo</NewTodoLabel>
         <NewTodoInput
           onChange={(e) => setNewTodo(e.target.value)}
           type="text"
@@ -39,22 +39,6 @@ const NewTodo = () => {
           required
         />
       </NewTodoForm>
-      <ButtonsContainer>
-        <Button
-          onClick={() => dispatch({ type: "UNDO" })}
-          disabled={!hasPast}
-          type="button"
-        >
-          undo
-        </Button>
-        <Button
-          onClick={() => dispatch({ type: "REDO" })}
-          disabled={!hasFuture}
-          type="button"
-        >
-          redo
-        </Button>
-      </ButtonsContainer>
     </NewTodoSection>
   );
 };
