@@ -98,7 +98,7 @@ const TodoList = () => {
         <Droppable droppableId="droppable">
           {(provided) => (
             <ul
-              role="todo list"
+              role="list"
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
