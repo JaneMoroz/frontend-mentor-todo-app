@@ -48,7 +48,7 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
   }
   body {
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-weight: 400;
   }
   main {

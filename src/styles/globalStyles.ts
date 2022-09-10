@@ -27,6 +27,8 @@ export const Container = styled.div`
 
 type FlexProps = {
   borderBottom?: boolean;
+  fullWidth?: boolean;
+  padding?: boolean;
 };
 
 export const Flex = styled.div<FlexProps>`
@@ -39,6 +41,17 @@ export const Flex = styled.div<FlexProps>`
     css`
       border-bottom: 0.5px solid ${(props) => props.theme.secondary};
     `}
+  ${(props) =>
+    props.fullWidth === true &&
+    css`
+      width: 100%;
+      column-gap: 2.4rem;
+    `}
+  ${(props) =>
+    props.padding === true &&
+    css`
+      padding: 1.8rem 2.4rem;
+    `}
 `;
 
 type ButtonProps = {
@@ -46,12 +59,11 @@ type ButtonProps = {
   big?: boolean;
   medium?: boolean;
   active?: boolean;
-  icon?: boolean; // different colors
+  icon?: boolean;
   circle?: boolean;
   circleChecked?: boolean;
 };
 
-// bigText, mediumText, smallText, delete, theme, status
 export const Button = styled.button<ButtonProps>`
   font-weight: inherit;
   color: inherit;

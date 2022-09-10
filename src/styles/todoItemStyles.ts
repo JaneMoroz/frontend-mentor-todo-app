@@ -5,15 +5,8 @@ type ListItemProps = {
   isDragging?: boolean;
 };
 
-export const ListItem = styled.div<ListItemProps>`
-  display: flex;
-  align-items: center;
-  column-gap: 2.4rem;
-  width: 100%;
-  padding: 1.8rem 2.4rem;
+export const ListItem = styled.li<ListItemProps>`
   background: ${(props) => props.theme.listBackground};
-  border-radius: 5px 5px 0 0;
-  border-bottom: 0.5px solid ${(props) => props.theme.secondary};
 
   p {
     color: ${(props) => props.theme.primary};
