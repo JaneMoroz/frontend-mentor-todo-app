@@ -50,7 +50,7 @@ export const Flex = styled.div<FlexProps>`
   ${(props) =>
     props.padding === true &&
     css`
-      padding: 1.8rem 2.4rem;
+      padding: 2rem 2.4rem;
     `}
 `;
 
@@ -86,7 +86,7 @@ export const Button = styled.button<ButtonProps>`
       text-transform: uppercase;
       font-size: 1.4rem;
       font-weight: 300;
-      padding: 1.8rem 2.4rem;
+      padding: 2rem 2.4rem;
 
       :disabled:hover {
         color: ${(props) => props.theme.secondary};

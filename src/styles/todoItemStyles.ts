@@ -14,6 +14,15 @@ export const ListItem = styled.li<ListItemProps>`
     flex: 1;
   }
 
+  button:last-child {
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  :hover button:last-child {
+    opacity: 1;
+  }
+
   ${(props) =>
     props.checked === true &&
     css`

@@ -6,6 +6,6 @@ export const Heading = styled.header`
     font-size: 4rem;
     color: ${(props) => props.theme.title};
     text-transform: uppercase;
-    letter-spacing: 1rem;
+    letter-spacing: 1.2rem;
   }
 `;

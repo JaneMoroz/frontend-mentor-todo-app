@@ -11,7 +11,7 @@ export const NewTodoForm = styled.form`
   display: flex;
   align-items: center;
   column-gap: 2.4rem;
-  padding: 1.8rem 2.4rem;
+  padding: 2rem 2.4rem;
 
   span {
     height: 2.4rem;

@@ -14,7 +14,7 @@ export const TodoListSection = styled.div`
 
 export const TodoListFooter = styled.footer`
   position: relative;
-  padding: 1.8rem 2.4rem;
+  padding: 2rem 2.4rem;
   color: ${(props) => props.theme.secondary};
   font-size: 1.4rem;
 
