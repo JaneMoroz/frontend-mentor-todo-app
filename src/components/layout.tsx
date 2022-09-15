@@ -58,7 +58,7 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
   }
 
   ul {
-    text-decoration: none;
+    list-style: none;
   }
 
   button {
